@@ -1,7 +1,8 @@
 import os
 from dash import Dash, html, dcc, callback, Input, Output, State
 from embedchain import App
-import pyttsx3 #for text to speech conversion
+from gtts import gTTS
+import playsound
 #pip install -r requirements.txt
 
 # Create a bot instance
@@ -17,9 +18,6 @@ ai_bot.add("https://wildbirdrehab.com/sitemap.xml", data_type="sitemap")
 ai_bot.add("How to find a wildlife rehabilitator _ The Humane Society of the United States.pdf", data_type='pdf_file')
 ai_bot.add("https://www.avianandanimal.com/bird-nutrition.html")
 ai_bot.add("https://glassdoctor.com/sites/default/files/content/blog/images/mdg_ouw_how_to_keep_birds_from_hitting_windows_bloghero_may19_20190205_1-compress.jpg")
-
-# Initializing the pyttsx3 engine
-text_speech = pyttsx3.init()
 
 app = Dash()
 app.layout = html.Div([
@@ -38,6 +36,7 @@ app.layout = html.Div([
         html.Br(),
         html.Button(id='submit-btn', children='Submit', style={'margin-bottom': '20px'}),
         dcc.Loading(id="load", children=html.Div(id='response-area', children='')),
+        html.Button(id='speak-btn', children='Speak', style={'margin-bottom': '20px'}),
         html.Hr()
         ]),
     html.Footer([
@@ -48,7 +47,8 @@ app.layout = html.Div([
 
 @callback(
     Output('response-area', 'children'),
-    Input('submit-btn', 'n_clicks'),
+    [Input('submit-btn', 'n_clicks'), 
+    Input('speak-btn', 'n-clicks')],
     State('question-area', 'value'),
     prevent_initial_call=True
 )
@@ -56,7 +56,10 @@ def create_response(_, question):
     # What kind of glass should I use to keep birds safe from window collisions?
     answer = ai_bot.query(question)
     return answer
-    text_speech.say(answer)
+
+def speak_text(n_clicks, answer):
+    recite = gtts.gTTS(answer, lang='en')
+    playsound.playsound(recite)
 
 def update_output(value):
     return f'You have selected {value}'
