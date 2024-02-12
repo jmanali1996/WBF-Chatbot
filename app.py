@@ -36,7 +36,7 @@ app.layout = html.Div([
         html.Br(),
         html.Button(id='submit-btn', children='Submit', style={'margin-bottom': '20px'}),
         dcc.Loading(id="load", children=html.Div(id='response-area', children='')),
-        html.Button(id='speak-btn', children='Speak', style={'margin-bottom': '20px'}),
+        html.Button(id='speak-btn', children='Speak', style={'margin-top': '20px', 'margin-bottom': '20px'}),
         html.Hr()
         ]),
     html.Footer([
@@ -46,9 +46,8 @@ app.layout = html.Div([
 ])
 
 @callback(
-    Output('response-area', 'children'),
-    [Input('submit-btn', 'n_clicks'), 
-    Input('speak-btn', 'n-clicks')],
+    Output('response-area', 'children', allow_duplicate=True),
+    Input('submit-btn', 'n_clicks'), 
     State('question-area', 'value'),
     prevent_initial_call=True
 )
@@ -57,9 +56,17 @@ def create_response(_, question):
     answer = ai_bot.query(question)
     return answer
 
-def speak_text(n_clicks, answer):
-    recite = gtts.gTTS(answer, lang='en')
-    playsound.playsound(recite)
+@callback(
+    Output('response-area', 'children'),
+    Input('speak-btn', 'n-clicks'),
+    State('question-area', 'value'),
+    prevent_initial_call=True
+)
+def speak_text(_, answer):
+    text_speech = gtts.gTTS(answer, lang='en')
+    text_speech.save("msg.mp3")
+    recite = playsound.playsound("msg.mp3")
+    return recite
 
 def update_output(value):
     return f'You have selected {value}'
