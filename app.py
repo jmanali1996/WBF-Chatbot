@@ -1,6 +1,9 @@
 import os
+import tempfile
 from dash import Dash, html, dcc, callback, Input, Output, State
 from embedchain import App
+import dash_bootstrap_components as dbc
+from dash_iconify import DashIconify
 from gtts import gTTS
 import playsound
 #pip install -r requirements.txt
@@ -17,11 +20,17 @@ ai_bot.add("https://www.youtube.com/watch?v=l8LDTRxc0Bc")
 ai_bot.add("https://wildbirdrehab.com/sitemap.xml", data_type="sitemap")
 ai_bot.add("How to find a wildlife rehabilitator _ The Humane Society of the United States.pdf", data_type='pdf_file')
 ai_bot.add("https://www.avianandanimal.com/bird-nutrition.html")
-ai_bot.add("https://glassdoctor.com/sites/default/files/content/blog/images/mdg_ouw_how_to_keep_birds_from_hitting_windows_bloghero_may19_20190205_1-compress.jpg")
 
-app = Dash()
-app.layout = html.Div([
-    html.Div([
+app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+
+submit_icon = DashIconify(icon="guidance:down-angle-arrow", style={"marginLeft": 5})
+submit_button = dbc.Button(id='submit-btn', children=['Submit', submit_icon], style={'margin-bottom': '20px'})
+
+speak_icon = DashIconify(icon="mdi:speak", style={"marginLeft": 5})
+speak_button = dbc.Button(id='speak-btn', children=['Speak', speak_icon], style={'margin-top': '20px', 'margin-bottom': '20px'})
+
+app.layout = dbc.Container([
+    dbc.Container([
         html.H1('WILD BIRD FUND', style={'text-align': 'center', 'color': 'red'}),
         html.H2('Hello birds lovers and rescuers!'), 
         html.H3('This AI Chatbot can provide answers to all the queries ranging from wild bird rescuing organizations near you '
@@ -34,15 +43,17 @@ app.layout = html.Div([
         html.Br(),
         dcc.Textarea(id='question-area', value=None, style={'width': '25%', 'height': 100, 'margin-bottom': '20px'}),
         html.Br(),
-        html.Button(id='submit-btn', children='Submit', style={'margin-bottom': '20px'}),
+        submit_button,
         dcc.Loading(id="load", children=html.Div(id='response-area', children='')),
-        html.Button(id='speak-btn', children='Speak', style={'margin-top': '20px', 'margin-bottom': '20px'}),
+        speak_button,
         html.Hr()
         ]),
-    html.Footer([
-        html.Label(['If you wish to get pictorial responses to your queries, click ', 
-                html.A('here.', href='https://images.google.com', target='_blank')])
-        ])
+    dbc.Container([
+        html.Footer([
+            html.Label(['If you wish to get pictorial responses to your queries, click ', 
+                    html.A('here.', href='https://images.google.com', target='_blank')])
+            ])
+    ])
 ])
 
 @callback(
@@ -56,17 +67,20 @@ def create_response(_, question):
     answer = ai_bot.query(question)
     return answer
 
-@callback(
+@app.callback(
     Output('response-area', 'children'),
-    Input('speak-btn', 'n-clicks'),
-    State('question-area', 'value'),
+    Input('speak-btn', 'n_clicks'),
+    State('response-area', 'children'),
     prevent_initial_call=True
 )
 def speak_text(_, answer):
-    text_speech = gtts.gTTS(answer, lang='en')
-    text_speech.save("msg.mp3")
-    recite = playsound.playsound("msg.mp3")
-    return recite
+    if isinstance(answer, str):
+        text_speech = gTTS(answer, lang='en')
+        with tempfile.NamedTemporaryFile(suffix='.mp3', delete=False) as temp_file:
+            temp_file_name = temp_file.name
+            text_speech.save(temp_file_name)
+            playsound.playsound(temp_file_name)
+        return answer
 
 def update_output(value):
     return f'You have selected {value}'
