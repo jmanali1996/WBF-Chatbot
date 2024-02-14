@@ -50,7 +50,7 @@ app.layout = dbc.Container([
         ]),
     dbc.Container([
         html.Footer([
-            html.Label(['If you wish to get pictorial responses to your queries, click ', 
+            html.Label(['If you wish to get pictorial responses to your questions click ', 
                     html.A('here.', href='https://images.google.com', target='_blank')])
             ])
     ])
@@ -64,8 +64,11 @@ app.layout = dbc.Container([
 )
 def create_response(_, question):
     # What kind of glass should I use to keep birds safe from window collisions?
-    answer = ai_bot.query(question)
-    return answer
+    if isinstance(question, str):
+        answer = ai_bot.query(question)
+        return answer
+    else: 
+        return f'Please enter your question.'
 
 @app.callback(
     Output('response-area', 'children'),
