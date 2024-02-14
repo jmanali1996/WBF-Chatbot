@@ -3,5 +3,8 @@ embedchain==0.1.67
 lxml==5.1.0
 youtube-transcript-api==0.6.2
 pytube==15.0.0
+dash-iconify==0.1.2
+dash-bootstrap-components==1.5.0
 gTTS==2.5.1
+gtts-token==1.1.4
 playsound==1.2.2
