@@ -33,8 +33,8 @@ app.layout = dbc.Container([
     dbc.Container([
         html.H1('WILD BIRD FUND', style={'text-align': 'center', 'color': 'red'}),
         html.H2('Hello birds lovers and rescuers!'), 
-        html.H3('This AI Chatbot can provide answers to all the queries ranging from wild bird rescuing organizations near you '
-                'to how how to keep city birds safe and take care of them when injured.'),
+        html.H3('This AI Chatbot can provide answers to all your questions ranging from wild bird rescuing organizations near you '
+                'to how to keep the city birds safe and take care of them when injured.'),
         html.Label(['Currently the Wild Bird Fund have office only in ', 
                 html.A('Manhattan.', href='https://maps.app.goo.gl/3cgmsobhkp5SFtuk8', target='_blank')]),
         html.Br(),
