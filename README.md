@@ -1,4 +1,4 @@
-# WBF
+# Wild Bird Fund chatbot
 
 ## This is the development of an AI chatbot that is primarily built for the Wild Bird Fund organization in Manhattan. The chatbot contains data from the website of the organization and other information from different sources in the database. It can answer all your questions ranging from wild bird rescuing organizations near a person residing in the United States of America to how to keep the city birds safe and take care of them when injured.
 
