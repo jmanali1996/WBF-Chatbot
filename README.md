@@ -4,9 +4,15 @@
 
 ### To get started, please follow the below instructions:
 
-• Open your terminal or cmd prompt and type: _git clone https://github.com/jmanali1996/WBF.git_
+• Go on to https://github.com/codespaces and choose the blank template.
 
-• Install all the required packages with the code: _pip install -r requirements.txt_
+• Click on 'Clone Git Repository...' on the Welcome page.
+
+• Enter the repo link [https://github.com/jmanali1996/WBF.git] in the search bar on the top and click 'OK'.
+
+• A pop-up window will appear with the question 'Would you like to open the cloned repository, or add it to the current workspace?' to which select 'Open'.
+
+• In the terminal, install all the required packages with the code: _pip install -r requirements.txt_
 
 • Before running the app, keep in mind to insert your API key in line 12 of the app.py file. You can generate your unique API key by visiting the website https://openai.com/  
 
