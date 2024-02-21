@@ -1,6 +1,6 @@
 import os
 import tempfile
-from dash import Dash, html, dcc, callback, Input, Output, State
+from dash import Dash, html, dcc, callback, Input, Output, State, no_update
 from embedchain import App
 import dash_bootstrap_components as dbc
 from dash_iconify import DashIconify
@@ -46,6 +46,7 @@ app.layout = dbc.Container([
         submit_button,
         dcc.Loading(id="load", children=html.Div(id='response-area', children='')),
         speak_button,
+        html.Div(id="empty-div"),
         html.Hr()
         ]),
     dbc.Container([
@@ -64,14 +65,14 @@ app.layout = dbc.Container([
 )
 def create_response(_, question):
     # What kind of glass should I use to keep birds safe from window collisions?
-    if isinstance(question, str):
+    if not question:
+        return f'Please enter your question.'
+    else:
         answer = ai_bot.query(question)
         return answer
-    else: 
-        return f'Please enter your question.'
 
 @app.callback(
-    Output('response-area', 'children'),
+    Output('empty-div', 'children'),
     Input('speak-btn', 'n_clicks'),
     State('response-area', 'children'),
     prevent_initial_call=True
@@ -83,10 +84,7 @@ def speak_text(_, answer):
             temp_file_name = temp_file.name
             text_speech.save(temp_file_name)
             playsound.playsound(temp_file_name)
-        return answer
-
-def update_output(value):
-    return f'You have selected {value}'
+        return no_update
 
 if __name__ == '__main__':
     app.run_server(debug=False)
