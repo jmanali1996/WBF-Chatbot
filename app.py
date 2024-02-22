@@ -83,6 +83,7 @@ def speak_text(_, answer):
         with tempfile.NamedTemporaryFile(suffix='.mp3', delete=False) as temp_file:
             temp_file_name = temp_file.name
             text_speech.save(temp_file_name)
+            temp_file.close()
             playsound.playsound(temp_file_name)
         return no_update
 
