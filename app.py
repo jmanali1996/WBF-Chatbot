@@ -24,6 +24,7 @@ ai_bot.add("How to find a wildlife rehabilitator _ The Humane Society of the Uni
 ai_bot.add("https://www.avianandanimal.com/bird-nutrition.html")
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+server = app.server
 
 submit_icon = DashIconify(icon="guidance:down-angle-arrow", style={"marginLeft": 5})
 submit_button = dbc.Button(id='submit-btn', children=['Submit', submit_icon], style={'margin-bottom': '20px'})
