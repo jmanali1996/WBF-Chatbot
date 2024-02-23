@@ -1,5 +1,6 @@
 import os
 import chromadb
+import sqlite3
 import tempfile
 from dash import Dash, html, dcc, callback, Input, Output, State, no_update
 from embedchain import App
