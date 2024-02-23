@@ -1,4 +1,5 @@
 import os
+import chromadb
 import tempfile
 from dash import Dash, html, dcc, callback, Input, Output, State, no_update
 from embedchain import App
