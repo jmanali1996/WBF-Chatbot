@@ -1,0 +1,10 @@
+dash==2.14.2
+embedchain==0.1.67
+lxml==5.1.0
+youtube-transcript-api==0.6.2
+pytube==15.0.0
+dash-iconify==0.1.2
+dash-bootstrap-components==1.5.0
+gunicorn
+chromadb==0.4.22
+pysqlite3
