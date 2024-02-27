@@ -47,7 +47,15 @@ app.layout = dbc.Container([
     dbc.Container([
         html.Footer([
             html.Label(['If you wish to get pictorial responses to your questions click ', 
-                    html.A('here.', href='https://images.google.com', target='_blank')])
+                    html.A('here.', href='https://images.google.com', target='_blank')]),
+            html.Br(),
+            html.Hr(),
+            html.Label(['To avail the text-to speech feature of the response, run the app through the ', 
+                    html.A('GitHub repo.', href='https://github.com/jmanali1996/WBF.git', target='_blank')], 
+                       style={'margin-bottom': '50px'}),
+            html.Br(),
+            html.Hr(),
+            html.I('An app by Manali Jain', style={'color': 'darkgrey'})
             ])
     ])
 ])
