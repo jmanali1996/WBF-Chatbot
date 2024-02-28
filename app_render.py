@@ -51,7 +51,7 @@ app.layout = dbc.Container([
             html.Br(),
             html.Hr(),
             html.Label(['To avail the text-to-speech feature of the response, run the app through the ', 
-                    html.A('GitHub repo.', href='https://github.com/jmanali1996/WBF.git', target='_blank')], 
+                    html.A('GitHub repo.', href='https://github.com/jmanali1996/WBF-Chatbot.git', target='_blank')], 
                        style={'margin-bottom': '50px'}),
             html.Br(),
             html.Hr(),
