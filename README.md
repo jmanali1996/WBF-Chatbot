@@ -27,5 +27,3 @@ https://github.com/jmanali1996/WBF/assets/115955036/360c0fd0-fe9e-4d14-951e-fffb
 ### Link to the app:
 
 https://wbf-chatbot.onrender.com
-
-_*The loading time will be up to 1 min as it uses free server and advanced AI integrations._
