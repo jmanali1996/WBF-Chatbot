@@ -9,7 +9,7 @@ import playsound
 #pip install -r requirements.txt
 
 # Create a bot instance
-#os.environ["OPENAI_API_KEY"] = "<Enter your API_KEY here>"
+#os.environ["OPENAI_API_KEY"] = "<Enter your unique API key>"
 ai_bot = App.from_config(config_path="config.yaml")
 
 # Embed resources: websites, PDFs, videos
@@ -24,11 +24,16 @@ ai_bot.add("https://www.avianandanimal.com/bird-nutrition.html")
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
 
+# Submit button
 submit_icon = DashIconify(icon="guidance:down-angle-arrow", style={"marginLeft": 5})
 submit_button = dbc.Button(id='submit-btn', children=['Submit', submit_icon], style={'margin-bottom': '20px'})
 
+# Speak button
 speak_icon = DashIconify(icon="mdi:speak", style={"marginLeft": 5})
 speak_button = dbc.Button(id='speak-btn', children=['Speak', speak_icon], style={'margin-top': '20px', 'margin-bottom': '20px'})
+
+# Visitor count
+visitor_count = 0
 
 app.layout = dbc.Container([
     dbc.Container([
@@ -51,10 +56,12 @@ app.layout = dbc.Container([
         html.Hr()
         ]),
     dbc.Container([
-        html.Footer([
-            html.Label(['If you wish to get pictorial responses to your questions click ', 
-                    html.A('here.', href='https://images.google.com', target='_blank')])
-            ])
+        html.Footer(children=[
+                html.Label(['If you wish to get pictorial responses to your questions click ', 
+                        html.A('here.', href='https://images.google.com', target='_blank')]),
+                html.Br(),
+                html.P(id='visitor_count_display', style={'text-align': 'right'})
+                ])
     ])
 ])
 
@@ -87,6 +94,17 @@ def speak_text(_, answer):
             temp_file.close()
             playsound.playsound(temp_file_name)
         return no_update
+
+@app.callback(
+    Output('visitor_count_display', 'children'),
+    Input('visitor_count_display', 'children')
+)
+def update_visitor_count(value):
+    global visitor_count
+    # Increment visitor count
+    visitor_count += 1
+    # Return updated count
+    return f'Total visitors: {visitor_count}'
 
 if __name__ == '__main__':
     app.run_server(debug=False)
