@@ -31,6 +31,7 @@ speak_button = dbc.Button(id='speak-btn', children=['Speak', speak_icon], style=
 # Visitor count
 visitor_count = 0
 
+# Layout
 app.layout = dbc.Container([
     dbc.Container([
         html.H1('WILD BIRD FUND', style={'text-align': 'center', 'color': 'red'}),
@@ -72,6 +73,7 @@ app.layout = dbc.Container([
     ])
 ])
 
+# Submit callback
 @callback(
     Output('response-area', 'children'),
     Input('submit-btn', 'n_clicks'), 
@@ -86,16 +88,16 @@ def create_response(_, question):
         answer = ai_bot.query(question)
         return answer
 
+# Visitor count callback
 @app.callback(
     Output('visitor_count_display', 'children'),
     Input('visitor_count_display', 'children')
 )
 def update_visitor_count(value):
     global visitor_count
-    # Increment visitor count
     visitor_count += 1
-    # Return updated count
     return f'Total visitors: {visitor_count}'
+
 
 if __name__ == '__main__':
     app.run_server(debug=False)
