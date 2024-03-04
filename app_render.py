@@ -20,11 +20,16 @@ ai_bot.add("https://www.avianandanimal.com/bird-nutrition.html")
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
 
+# Submit button 
 submit_icon = DashIconify(icon="guidance:down-angle-arrow", style={"marginLeft": 5})
 submit_button = dbc.Button(id='submit-btn', children=['Submit', submit_icon], style={'margin-bottom': '20px'})
 
+# Speak button
 speak_icon = DashIconify(icon="mdi:speak", style={"marginLeft": 5})
 speak_button = dbc.Button(id='speak-btn', children=['Speak', speak_icon], style={'margin-top': '20px', 'margin-bottom': '20px'})
+
+# Visitor count
+visitor_count = 0
 
 app.layout = dbc.Container([
     dbc.Container([
@@ -45,20 +50,25 @@ app.layout = dbc.Container([
         html.Hr()
         ]),
     dbc.Container([
-        html.Footer([
-            html.Label(['If you wish to get pictorial responses to your questions click ', 
-                    html.A('here.', href='https://images.google.com', target='_blank')]),
-            html.Br(),
-            html.Hr(),
-            html.Label(['To avail the text-to-speech feature of the response, run the app through the ', 
-                    html.A('GitHub repo.', href='https://github.com/jmanali1996/WBF-Chatbot.git', target='_blank')], 
-                       style={'margin-bottom': '50px'}),
-            html.Br(),
-            html.Hr(),
-            html.I('An app by Manali Jain', style={'color': 'darkgrey'}),
-            html.Br(),
-            html.I('Reach out for feedback at jmanali1996@gmail.com', style={'color': 'darkgrey'})
-            ])
+        html.Footer(
+            children=[
+                html.Label(['If you wish to get pictorial responses to your questions click ', 
+                        html.A('here.', href='https://images.google.com', target='_blank')]),
+                html.Br(),
+                html.Hr(),
+                html.Label(['To avail the text-to-speech feature of the response, run the app through the ', 
+                        html.A('GitHub repo.', href='https://github.com/jmanali1996/WBF-Chatbot.git', target='_blank')], 
+                        style={'margin-bottom': '50px'}),
+                html.Br(),
+                html.P(id='visitor_count_display', style={'text-align': 'right'}),
+                html.Hr(),
+                html.I('An app by Manali Jain', style={'color': 'darkgrey'}),
+                html.Br(),
+                html.I('Reach out for feedback at ', 
+                    html.A('jmanali1996@gmail.com', href='mailto:jmanali1996@gmail.com', target="_blank"),
+                    style={'color': 'darkgrey'})
+            ]
+        )
     ])
 ])
 
@@ -75,6 +85,17 @@ def create_response(_, question):
     else:
         answer = ai_bot.query(question)
         return answer
+
+@app.callback(
+    Output('visitor_count_display', 'children'),
+    Input('visitor_count_display', 'children')
+)
+def update_visitor_count(value):
+    global visitor_count
+    # Increment visitor count
+    visitor_count += 1
+    # Return updated count
+    return f'Total visitors: {visitor_count}'
 
 if __name__ == '__main__':
     app.run_server(debug=False)
