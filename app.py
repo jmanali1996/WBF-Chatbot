@@ -56,12 +56,14 @@ app.layout = dbc.Container([
         html.Hr()
         ]),
     dbc.Container([
-        html.Footer(children=[
+        html.Footer(
+            children=[
                 html.Label(['If you wish to get pictorial responses to your questions click ', 
                         html.A('here.', href='https://images.google.com', target='_blank')]),
                 html.Br(),
                 html.P(id='visitor_count_display', style={'text-align': 'right'})
-                ])
+            ]
+        )
     ])
 ])
 
