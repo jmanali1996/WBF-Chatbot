@@ -64,8 +64,8 @@ app.layout = dbc.Container([
                 html.Hr(),
                 html.I('An app by Manali Jain', style={'color': 'darkgrey'}),
                 html.Br(),
-                html.I('Reach out for feedback at ', 
-                    html.A('jmanali1996@gmail.com', href='mailto:jmanali1996@gmail.com', target="_blank"),
+                html.I(['Reach out for feedback at ',
+                    html.A('jmanali1996@gmail.com', href='mailto:jmanali1996@gmail.com', target="_blank")],
                     style={'color': 'darkgrey'})
             ]
         )
