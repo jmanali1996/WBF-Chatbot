@@ -6,7 +6,6 @@ import dash_bootstrap_components as dbc
 from dash_iconify import DashIconify
 from gtts import gTTS
 import playsound
-#pip install -r requirements.txt
 
 # Create a bot instance
 os.environ["OPENAI_API_KEY"]
