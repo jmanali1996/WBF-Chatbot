@@ -1,1 +1,1 @@
-RUN pip install -U langchain-community
+pip install -U langchain-community
