@@ -1,5 +1,5 @@
 dash
-embedchain
+embedchain==0.1.113
 lxml
 youtube-transcript-api
 pytube
