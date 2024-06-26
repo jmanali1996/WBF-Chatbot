@@ -27,4 +27,4 @@ https://github.com/jmanali1996/WBF/assets/115955036/360c0fd0-fe9e-4d14-951e-fffb
 
 ### Link to the app:
 
-https://wbf-chatbot.onrender.com
+https://wbf-chatbot.toystack.dev
