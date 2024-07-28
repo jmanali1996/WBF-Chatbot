@@ -7,11 +7,11 @@ from dash_iconify import DashIconify
 from gtts import gTTS
 import playsound
 
-# Create a bot instance
+# CREATE A BOT INSTANCE
 os.environ["OPENAI_API_KEY"]
 ai_bot = App.from_config(config_path="config.yaml")
 
-# Embed resources: websites, PDFs, videos
+# EMBED RESOURCES: WEBSITES, PDFS, VIDEOS
 ai_bot.add("https://www.wildbirdfund.org/page-sitemap.xml", data_type="sitemap")
 ai_bot.add("https://nycaudubon.org/our-work/conservation/project-safe-flight")
 ai_bot.add("Birds Flying Into Windows.pdf", data_type='pdf_file')
@@ -23,18 +23,18 @@ ai_bot.add("https://www.avianandanimal.com/bird-nutrition.html")
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
 
-# Submit button
+# SUBMIT BUTTON
 submit_icon = DashIconify(icon="guidance:down-angle-arrow", style={"marginLeft": 5})
 submit_button = dbc.Button(id='submit-btn', children=['Submit', submit_icon], style={'margin-bottom': '20px'})
 
-# Speak button
+# SPEAK BUTTON
 speak_icon = DashIconify(icon="mdi:speak", style={"marginLeft": 5})
 speak_button = dbc.Button(id='speak-btn', children=['Speak', speak_icon], style={'margin-top': '20px', 'margin-bottom': '20px'})
 
-# Visitor count
-visitor_count = 0
+# VISITOR COUNT
+#visitor_count = 0
 
-# Layout
+# LAYOUT
 app.layout = dbc.Container([
     dbc.Container([
         html.H1('WILD BIRD FUND', style={'text-align': 'center', 'color': 'red'}),
@@ -60,14 +60,15 @@ app.layout = dbc.Container([
             children=[
                 html.Label(['If you wish to get pictorial responses to your questions click ', 
                         html.A('here.', href='https://images.google.com', target='_blank')]),
-                html.Br(),
-                html.P(id='visitor_count_display', style={'text-align': 'right'})
+                #html.Br(),
+                #additional option to add visitor count
+                #html.P(id='visitor_count_display', style={'text-align': 'right'})
             ]
         )
     ])
 ])
 
-# Submit callback
+# Submit Callback
 @callback(
     Output('response-area', 'children', allow_duplicate=True),
     Input('submit-btn', 'n_clicks'), 
@@ -82,7 +83,7 @@ def create_response(_, question):
         answer = ai_bot.query(question)
         return answer
 
-# Speak callback
+# SPEAK CALLBACK
 @app.callback(
     Output('empty-div', 'children'),
     Input('speak-btn', 'n_clicks'),
@@ -99,16 +100,16 @@ def speak_text(_, answer):
             playsound.playsound(temp_file_name)
         return no_update
 
-# Visitor count callback
-@app.callback(
-    Output('visitor_count_display', 'children'),
-    Input('visitor_count_display', 'children')
-)
-def update_visitor_count(value):
-    global visitor_count
-    visitor_count += 1
-    return f'Total visitors: {visitor_count}'
+# VISITOR COUNT CALLBACK
+#@app.callback(
+#    Output('visitor_count_display', 'children'),
+#    Input('visitor_count_display', 'children')
+#)
+#def update_visitor_count(value):
+#    global visitor_count
+#    visitor_count += 1
+#    return f'Total visitors: {visitor_count}'
 
 
 if __name__ == '__main__':
-    app.run_server(debug=False, host='0.0.0.0', port=5000)
+    app.run_server(debug=True)
