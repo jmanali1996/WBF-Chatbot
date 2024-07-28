@@ -68,7 +68,7 @@ app.layout = dbc.Container([
     ])
 ])
 
-# Submit Callback
+# SUBMIT CALLBACK
 @callback(
     Output('response-area', 'children', allow_duplicate=True),
     Input('submit-btn', 'n_clicks'), 
