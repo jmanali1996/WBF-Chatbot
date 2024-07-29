@@ -22,5 +22,11 @@
 
 ### Here is the video tutorial of the app which showcases its functioning and features:
 
-https://github.com/jmanali1996/WBF/assets/115955036/360c0fd0-fe9e-4d14-951e-fffb80c40f0b
+https://github.com/user-attachments/assets/ad468d7f-bac9-46b3-a398-d34c543504c2
+
+
+
+
+
+
 
